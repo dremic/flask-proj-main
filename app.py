@@ -118,6 +118,11 @@ def mainPage():
     # Render the HTML template with the files data
     return render_template('index.html', files=files)
 
+@app.route('/landing', methods=['GET'])
+def landingPage():
+   
+    return render_template('landing-page.html')
+
 @app.route('/', methods=['GET'])
 def land():
     return render_template('landing-page.html')
@@ -136,7 +141,7 @@ def login_user():
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
             }, app.config['SECRET_KEY'])
 
-            return redirect(url_for('upload_txt'))
+            return redirect(url_for('mainPage'))
         else:
             flash("Invalid Username or Password")
 
