@@ -110,8 +110,6 @@
           justify-content: right;
           align-items: center;
       }
-      /* container-how it work--------------------------------- */
-      /* container add a new title-------------------------  */
       .bg-light-blue{
           background-color:#D9E8EF ;
           padding: 50px 0;
@@ -817,35 +815,31 @@
             <h3 class="bold">1. Quick Add a New Article:</h3>
             <p>Save a new file and use it as the article for analysis. <br>Give your file a meaningful name for easy
               reference.</p>
-            <div class="clm-flex-form">
-              <div class="container form-container py-4 px-5">
-                <div class="mb-1">
-                  <label for="exampleFormControlInput1" class="form-label">File:</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Select Your File">
+              <div class="clm-flex-form">
+                <div class="container form-container py-4 px-5">
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">File:</label>
+                            <input class="form-control" type="file" id="file" name="file" required>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Save As:</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Save File As" required>
+                        </div>
+            
+                        <div class="mb-3">
+                            <label for="tags" class="form-label">Input Tags:</label>
+                            <input type="text" class="form-control" id="tags" name="tags" placeholder="Select Genre" required>
+                        </div>
+            
+                        <div class="flex text-right">
+                            <button type="submit" class="btn btn-primary upload-btn">Upload File</button>
+                        </div>
+                    </form>
                 </div>
-
-
-
-                <div class="mb-3">
-
-                  <input class="form-control" type="file" id="formFile">
-                </div>
-
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Save As:</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder=" Save File As ">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleFormControlInput1" class="form-label">Select Genre:</label>
-                  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Select Genre  ">
-                </div>
-                <div class="flex text-right">
-                  <button type="button" class="btn btn-primary upload-btn">Upload File</button>
-                </div>
-              </div>
-
-
             </div>
+            >
 
           </div>
           <div class="col-lg-6 col-md-12">
@@ -861,72 +855,46 @@
               <h3 class="bold">Select from Your Article Database:</h3>
               <p>Pick from your pre-existing article database. Choose a saved <br> article and initiate the bias
                 analysis process.</p>
-              <div class="container-table py-3">
-                <h45>Select File:</h45>
-
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Article Name</th>
-                      <th scope="col">Date Added</th>
-                      <th scope="col">Genre</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row normal-font">Hot Air Balloon Failure</th>
-                      <td>Jan 15, 2024</td>
-                      <td>Technology</td>
-                      <td class="text-center">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row normal-font">The White House</th>
-                      <td>Jan 12, 2024</td>
-                      <td>Politics</td>
-                      <td class="text-center">
-
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row normal-font">The White House</th>
-                      <td>Jan 12, 2024</td>
-                      <td>Politics</td>
-                      <td class="text-center">
-
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row normal-font">The White House</th>
-                      <td>Jan 12, 2024</td>
-                      <td>Politics</td>
-                      <td class="text-center">
-
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="flex text-right">
-                  <button type="button" class="btn btn-primary upload-btn">Select Files</button>
-                </div>
+            
+                <div class="container-table py-3">
+                  <h4>Select File:</h4>
+                  <table class="table" style="width: 100%;">
+                      <thead>
+                          <tr>
+                              <th scope="col" style="width: 60%;">Article Name</th>
+                              <th scope="col" style="width: 30%;">Genre</th>
+                              <th scope="col" style="width: 10%;">Action</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for file in files %}
+                          <tr>
+                              <td style="width: 60%;">{{ file.title }}</td>
+                              <td style="width: 30%;">{{ file.tags }}</td>
+                              <td class="text-center" style="width: 10%;">
+                                <input class="form-check-input file-radio" type="radio" name="fileRadio" id="{{ file._id }}" data-file-name="{{ file.file_path.split('/').pop() }}">
+                            </td>
+                            
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+                  <div class="flex text-right">
+                      <button type="button" class="btn btn-primary upload-btn" id="useBtn">Use</button>
+                  </div>
               </div>
+              
+              
+              
+              
+              
             </div>
           </div>
-
-
-
         </div>
 
       </div>
 
-
     </section>
-
     <section>
       <div class="container-fluid my-4">
         <div class="row ">
@@ -1014,9 +982,6 @@
                   </label> 
 
 
-
-
-
                   </div>
                   <p class="smfont">Enhance bias analysis by <br> considering the context of words.</p>
 
@@ -1073,69 +1038,11 @@
 
 
 
-
-
           </div>
-          <div class="col-lg-6 height-600px mt-5  px-1 border-pra bg-whitepra">
-
-            <H4><SPAN class="bold">Selected Article:</SPAN> The White House </H4>
-            <p class="smfont"> The White House, situated at 1600 Pennsylvania Avenue NW in Washington, D.C., stands as
-              an iconic symbol
-              of American democracy and political power. As the official residence and workplace of the President of the
-              United States, this historic building has played a crucial role in shaping the nation's history, politics,
-              and global influence.
-
-
-              The White House serves as the official workplace for the President, where important
-              decisions are made, policies are shaped, and international affairs are managed. As the residence of the
-              Commander-in-Chief, it symbolizes the continuity of leadership and the peaceful transition of power, a
-              cornerstone of American democracy. The Oval Office, located in the West Wing, is the primary workplace of
-              the President. Its unique oval shape and historical significance make it one of the most recognizable
-              rooms in the world.Presidents use this space to conduct meetings, make key decisions, and address the
-              nation during pivotal moments.
-
-
-              The White House has witnessed countless historical moments, both
-              celebratory and challenging.
-              From the signing of the Emancipation Proclamation by President Abraham
-              Lincoln to the historic signing of the Camp David Accords by President Jimmy Carter, the building has been
-              a silent witness to the evolution of the nation.
-
-
-              <br>
-              <br>
-              During times of crisis, the White House has often served
-              as a symbol of resilience and strength. President Franklin D. Roosevelt's Fireside Chats, delivered from
-              the Oval Office during World War II, reassured the American public and demonstrated the power of effective
-              communication during challenging times.\
-
-              <br>
-              <br>
-
-              The White House is a focal point during presidential
-              inaugurations, a tradition that dates back to the first inauguration of President George Washington in
-              1789. The peaceful transfer of power from one administration to the next is symbolized by the incoming and
-              outgoing presidents standing side by side on the inaugural platform.
-
-              <br>
-              <br>
-              The White House also hosts the
-              inaugural balls, which are attended by dignitaries, celebrities, and the public. These events celebrate
-              the democratic process and mark the beginning of a new presidential term.
-
-              <br>
-              <br>
-              The White House stands as more
-              than just a residence for the President; it is a symbol of the United States' commitment to democracy,
-              diplomacy, and the rule of law. From its architectural splendour to its historical significance, the White
-              House continues to play a central role in shaping the nation's destiny and projecting its influence onto
-              the world stage. As the seat of executive power, the White House will undoubtedly remain an enduring
-              emblem of American governance for generations to come.
-            </p>
-            <div class="flex text-right">
-              <button type="button" class="btn btn-primary upload-btn">Select Files</button>
-            </div>
-          </div>
+          <div class="col-lg-6 height-600px mt-5 px-1 border-pra bg-whitepra">
+            <h4><span class="bold">Selected Article:</span> <span id="selectedArticleTitle"></span></h4>
+            <div id="selectedArticleContent"></div>
+        </div>
 
 
 
@@ -1155,38 +1062,7 @@
             <div class="container bg-whitepra">
               <H4><SPAN class="bold">Selected Article:</SPAN> The White House </H4>
               <p class="smfont">
-                The White House, situated at 1600 Pennsylvania Avenue NW in Washington, D.C., stands as an iconic symbol
-                of American democracy and political power. As the official residence and workplace of the President of
-                the
-                United States, this historic building has played a crucial role in shaping the nation's history,
-                politics,
-                and global influence.
-                <br>
-                The White House serves as the official workplace for the President, where important
-                decisions are made, policies are shaped, and international affairs are managed. As the residence of the
-                Commander-in-Chief, it symbolizes the continuity of leadership and the peaceful transition of power, a
-                cornerstone of American democracy.
-                <br>
-                The Oval Office, located in the West Wing, is the primary workplace of
-                the President. Its unique oval shape and historical significance make it one of the most recognizable
-                rooms in the world. Presidents use this space to conduct meetings, make key decisions, and address the
-                nation during pivotal moments.
-
-                <br>The White House has witnessed countless historical moments, both
-                celebratory and challenging. From the signing of the Emancipation Proclamation by President Abraham
-                Lincoln to the historic signing of the Camp David Accords by President Jimmy Carter, the building has
-                been
-                a silent witness to the evolution of the nation. During times of crisis, the White House has often
-                served
-                as a symbol of resilience and strength. President Franklin D. Roosevelt's Fireside Chats, delivered from
-                the Oval Office during World War II, reassured the American public and demonstrated the power of
-                effective
-                communication during challenging times.
-                <br> The White House is a focal point during presidential
-                inaugurations, a tradition that dates back to the first inauguration of President George Washington in
-                1789. The peaceful transfer of power from one administration to the next is symbolized by the incoming
-                and
-                outgoing presidents standing side by side on the inaugural platform...
+         
               </p>
 
             </div>
@@ -1366,25 +1242,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </div>
 
                       </div>
@@ -1448,6 +1305,43 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const useButton = document.getElementById('useBtn');
+    useButton.addEventListener('click', function() {
+        const selectedRadio = document.querySelector('input[name="fileRadio"]:checked');
+        if (selectedRadio) {
+            const fileName = selectedRadio.getAttribute('data-file-name');
+            const filePath = `/static/articles/${fileName}`; // Adjusted file path construction
+            console.log('File name:', fileName);
+            console.log('File path:', filePath); // Added console log to check file path
+            // Get the article title from the correct element
+            const articleTitle = selectedRadio.parentElement.parentElement.querySelector('td:nth-child(1)').textContent.trim();
+            document.getElementById('selectedArticleTitle').textContent = articleTitle;
+            fetch(filePath)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('selectedArticleContent').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching file:', error);
+                });
+        } else {
+            alert('Please select a file.');
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+  
+  
 
 </body>
 

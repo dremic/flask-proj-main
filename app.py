@@ -110,6 +110,14 @@ def artHub():
     # Render the HTML template with the articles data
     return render_template('article-hub.html', articles=articles)
 
+@app.route('/main', methods=['GET'])
+def mainPage():
+    # Fetch files from the database
+    files = list(article_db.find({}, {'_id': False}))
+    
+    # Render the HTML template with the files data
+    return render_template('index.html', files=files)
+
 @app.route('/', methods=['GET'])
 def land():
     return render_template('landing-page.html')
@@ -389,8 +397,7 @@ def upload_file():
 
     flash('File uploaded successfully', 'success')
 
-    return redirect(url_for('artHub'))
-
+    return redirect(request.referrer)
 
 
 if __name__ == '__main__':
